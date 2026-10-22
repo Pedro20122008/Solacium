@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b21">
+  <meta name="description" content="Uma história interativa sensível sobre transtorno alimentar, duas irmãs e a busca por cuidado. Jogue no seu ritmo, pelo teclado ou pelo toque.">
+  <title>Fica mais um pouco — Como me sinto</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' rx='20' fill='%23101b21'/%3E%3Ccircle cx='40' cy='40' r='24' fill='none' stroke='%23efd3a6' stroke-width='2'/%3E%3Cpath d='M27 46 Q40 20 53 46' fill='none' stroke='%23efd3a6' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+  <div id="background" aria-hidden="true"><div id="scene-art"></div><div id="vision-layer"></div><div class="film-grain"></div></div>
+  <div class="page-shade" aria-hidden="true"></div>
+
+  <main id="main-content">
+    <section id="start-screen" class="screen" aria-labelledby="game-title">
+      <header class="site-header">
+        <a class="wordmark" href="#game-title" aria-label="Como me sinto. Fica mais um pouco."><span class="brand-symbol" aria-hidden="true">◌</span><span>COMO ME SINTO<small>UMA NOVA PERSPECTIVA</small></span></a>
+        <button class="quiet-button" data-open="settings-dialog"><span aria-hidden="true">Aa</span> Acessibilidade</button>
+      </header>
+      <div class="opening-content">
+        <p class="eyebrow"><span class="tiny-line" aria-hidden="true"></span> HISTÓRIA 04 <span class="eyebrow-dot" aria-hidden="true">·</span> FICÇÃO INTERATIVA</p>
+        <h1 id="game-title">Fica mais<br><em>um pouco.</em></h1>
+        <p class="opening-quote">Eu dizia que estava tudo bem.<br>Minha irmã aprendeu a esperar pela resposta.</p>
+        <p class="opening-description">Uma história sobre Luísa, o sofrimento com a alimentação e a música que ela compunha com a irmã. Sobre encontrar palavras, receber cuidado e voltar a ter espaço na própria vida.</p>
+        <div class="opening-actions">
+          <button id="start-button" class="primary-button">Começar história <span aria-hidden="true">↗</span></button>
+          <button id="continue-button" class="secondary-button" hidden>Continuar história</button>
+          <button class="text-button" data-open="help-dialog">Como jogar <span aria-hidden="true">+</span></button>
+        </div>
+        <p class="content-note">Ficção sobre transtorno alimentar, angústia e busca por cuidado. Há uma opção de leitura mais suave.</p>
+        <p id="save-hint" class="small-note" hidden></p>
+        <div class="opening-features"><span><span aria-hidden="true">◷</span> 12–18 minutos</span><span><span aria-hidden="true">⌨</span> Teclado ou toque</span><span><span aria-hidden="true">◎</span> No seu ritmo</span></div>
+      </div>
+      <div class="art-caption" aria-hidden="true"><span class="caption-line"></span><span>“Pode começar de novo.<br>Eu fico aqui.”</span><small>A NOSSA PARTE DA MÚSICA.</small></div>
+      <footer class="opening-footer"><span>Uma história sobre escuta, cuidado e recomeços.</span><div class="footer-links"><button class="text-button" data-open="about-dialog">Sobre a história</button><button class="text-button" data-open="support-dialog">Apoio e fontes</button></div></footer>
+    </section>
+
+    <section id="story-screen" class="screen" aria-label="História interativa" hidden>
+      <header class="site-header story-header">
+        <div class="wordmark"><span class="brand-symbol" aria-hidden="true">◌</span><span>FICA MAIS UM POUCO<small id="chapter-label">CAPÍTULO 01</small></span></div>
+        <div class="header-actions"><button id="pause-button" class="quiet-button"><span aria-hidden="true">Ⅱ</span> Pausar</button><button class="quiet-button" data-open="settings-dialog" aria-label="Abrir configurações de acessibilidade"><span aria-hidden="true">Aa</span><span class="desktop-label"> Acessibilidade</span></button></div>
+      </header>
+      <div class="progress-row"><p id="scene-position"></p><progress id="story-progress" max="25" value="1" aria-label="Progresso da história"></progress><span id="timeline-label"></span></div>
+      <article id="story-panel" tabindex="-1" aria-labelledby="scene-title" aria-describedby="scene-description scene-text objective">
+        <p id="scene-kicker" class="eyebrow"></p>
+        <h2 id="scene-title"></h2>
+        <p id="scene-description" class="scene-description"></p>
+        <div id="scene-text" class="narrative"></div>
+        <div id="interaction" class="interaction">
+          <p id="objective" class="objective"></p>
+          <ol id="route-progress" class="route-progress" aria-label="Etapas da interação" hidden></ol>
+          <div id="choices" class="choices" role="group" aria-label="Escolha uma ação"></div>
+          <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+          <div class="continue-row"><button id="next-button" class="primary-button" hidden>Continuar <span aria-hidden="true">→</span></button><button id="route-reset" class="text-button" hidden>Refazer sequência</button></div>
+        </div>
+      </article>
+      <footer class="story-footer">
+        <div class="utility-actions"><button id="repeat-button" class="text-button">Reler cena</button><button id="listen-button" class="text-button" aria-pressed="false">Ouvir trilha e ambiente</button><button id="soft-button" class="text-button" aria-pressed="false" hidden>Ler versão mais suave</button><button id="notebook-button" class="text-button">Caixa de lembranças <span id="notebook-count" class="counter">0</span></button><button class="text-button" data-open="support-dialog">Apoio e fontes</button></div>
+        <p id="control-hint" class="small-note">Tab para navegar · Enter para escolher</p>
+      </footer>
+    </section>
+
+    <section id="ending" class="screen ending-screen" aria-labelledby="ending-title" hidden>
+      <header class="site-header"><div class="wordmark"><span class="brand-symbol" aria-hidden="true">◌</span><span>COMO ME SINTO<small>FICA MAIS UM POUCO</small></span></div><button class="quiet-button" data-open="settings-dialog" aria-label="Abrir configurações de acessibilidade"><span aria-hidden="true">Aa</span> <span class="desktop-label">Acessibilidade</span></button></header>
+      <div class="ending-content" tabindex="-1" id="ending-content" aria-labelledby="ending-title" aria-describedby="ending-text ending-personal">
+        <p class="eyebrow">FIM DESTA HISTÓRIA. COMEÇO DE OUTRAS.</p>
+        <span class="ending-orbit" aria-hidden="true"><span></span></span>
+        <h2 id="ending-title">Ainda há<br><em>voz aqui.</em></h2>
+        <p id="ending-text">Ainda tenho dias difíceis. Tenho acompanhamento, pessoas com quem conversar e um próximo atendimento combinado. Hoje, a conversa continuou depois que a música acabou.</p>
+        <p id="ending-personal" class="ending-personal"></p>
+        <p id="ending-message" class="ending-message">“Fica mais um pouco?”<br>Eu fico. Ainda tenho uma coisa para contar.</p>
+        <div class="ending-actions"><button id="restart-button" class="primary-button">Jogar outra vez <span aria-hidden="true">↗</span></button><button class="secondary-button" id="ending-notebook">Abrir minhas lembranças</button><button class="text-button" data-open="about-dialog">Sobre a história</button><button class="text-button" data-open="support-dialog">Apoio e fontes</button></div>
+      </div>
+      <footer class="opening-footer"><span>Há espaço para uma próxima conversa.</span><span>COMO ME SINTO · HISTÓRIA 04</span></footer>
+    </section>
+  </main>
+
+  <dialog id="settings-dialog" aria-labelledby="settings-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">DO SEU JEITO</p><button class="close-button" aria-label="Fechar configurações">×</button></form>
+    <h2 id="settings-title">Acessibilidade</h2><p class="dialog-intro">A história espera por você. Ajuste a leitura, a voz e o cenário quando quiser.</p>
+    <div class="settings-list">
+      <label class="setting-row"><span><strong>Narração por voz</strong><small>Lê cenas, descrições e escolhas. Se usa leitor de tela, deixe desligada para evitar duas vozes.</small></span><input id="setting-narration" type="checkbox"></label>
+      <div class="setting-row"><label for="setting-rate"><strong>Velocidade da voz</strong></label><select id="setting-rate"><option value="0.85">Mais lenta</option><option value="1">Normal</option><option value="1.15">Mais rápida</option></select></div>
+      <label class="setting-row"><span><strong>Trilha e ambiente</strong><small>Piano instrumental original e ambientes discretos. O som é opcional.</small></span><input id="setting-sound" type="checkbox"></label>
+      <div class="setting-row"><label for="setting-volume"><strong>Volume da trilha e do ambiente</strong></label><input id="setting-volume" type="range" min="0" max="100" value="35" aria-valuetext="35 por cento"></div>
+      <div class="setting-row"><label for="setting-size"><strong>Tamanho do texto</strong></label><select id="setting-size"><option value="1">Padrão</option><option value="1.15">Grande</option><option value="1.3">Muito grande</option></select></div>
+      <label class="setting-row"><span><strong>Alto contraste</strong><small>Fundo sólido e controles com bordas mais marcadas.</small></span><input id="setting-contrast" type="checkbox"></label>
+      <label class="setting-row"><span><strong>Reduzir movimento</strong><small>Desliga a movimentação da câmera e as transições.</small></span><input id="setting-motion" type="checkbox"></label>
+      <label class="setting-row"><span><strong>Fundo sem ilustração</strong><small>Usa um fundo sólido, sem os detalhes dos cenários.</small></span><input id="setting-clear" type="checkbox"></label>
+      <label class="setting-row"><span><strong>Leitura mais suave</strong><small>Troca alguns trechos de angústia por resumos breves. Suas escolhas e o progresso são preservados.</small></span><input id="setting-soft" type="checkbox"></label>
+      <label class="setting-row"><span><strong>Atalhos de uma tecla</strong><small>Opcional. Deixe desligado se essas teclas já são usadas pelo seu leitor de tela.</small></span><input id="setting-shortcuts" type="checkbox"></label>
+    </div>
+    <p class="small-note">A voz usa o recurso de fala do navegador e depende das vozes disponíveis no dispositivo.</p>
+    <div class="dialog-bottom"><button id="test-voice" class="secondary-button">Testar voz</button><form method="dialog"><button class="primary-button">Voltar à história</button></form></div>
+  </dialog>
+
+  <dialog id="help-dialog" aria-labelledby="help-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">ANTES DE COMEÇAR</p><button class="close-button" aria-label="Fechar instruções">×</button></form>
+    <h2 id="help-title">No seu ritmo.</h2><p class="dialog-intro">Leia ou escute cada cena e escolha como continuar. Não há limite de tempo. Você pode experimentar as pistas quantas vezes quiser.</p>
+    <ul class="help-list"><li><strong>Teclado:</strong> use Tab e Shift + Tab para navegar; Enter ou Espaço ativa o botão em foco.</li><li><strong>Leitor de tela:</strong> títulos, descrições, pistas e escolhas estão em texto. A narração própria começa desligada.</li><li><strong>Som:</strong> o piano e os ambientes são opcionais. Todas as informações necessárias estão em texto.</li><li><strong>Lembranças:</strong> a caixa guarda objetos, anotações e pequenos vínculos da história. Você pode abri-la a qualquer momento.</li><li><strong>Leitura mais suave:</strong> disponível nas configurações e no rodapé das cenas que têm resumo. Você pode mudar de opção a qualquer momento.</li><li><strong>Progresso:</strong> é salvo neste navegador quando o armazenamento local está disponível.</li></ul>
+    <details><summary>Atalhos opcionais de uma tecla</summary><p>Ative-os em Acessibilidade. 1, 2 e 3 escolhem uma ação; N continua; R repete a cena; E liga ou desliga a trilha; C abre as lembranças; P pausa; H abre estas instruções. Escape fecha a janela aberta.</p></details>
+    <div class="dialog-bottom"><button class="secondary-button" id="help-settings">Configurar acessibilidade</button><form method="dialog"><button class="primary-button">Entendi</button></form></div>
+  </dialog>
+
+  <dialog id="pause-dialog" aria-labelledby="pause-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">SEM PRESSA</p><button class="close-button" aria-label="Retomar história">×</button></form>
+    <h2 id="pause-title">O mundo pode esperar.</h2><p class="dialog-intro">A cena está guardada. Volte quando quiser.</p><div class="dialog-bottom"><button id="home-button" class="secondary-button">Voltar ao início</button><form method="dialog"><button class="primary-button">Retomar história</button></form></div>
+  </dialog>
+
+  <dialog id="notebook-dialog" aria-labelledby="notebook-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">O QUE AINDA É MEU</p><button class="close-button" aria-label="Fechar lembranças">×</button></form>
+    <h2 id="notebook-title">Minha caixa de lembranças</h2><p class="dialog-intro">Objetos, palavras e os pequenos gestos que não quero esquecer. Você pode voltar a eles a qualquer momento.</p><ul id="notebook-list" class="notebook-list"></ul><form method="dialog" class="dialog-bottom"><button class="primary-button">Voltar</button></form>
+  </dialog>
+
+  <dialog id="about-dialog" aria-labelledby="about-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">COMO ME SINTO · HISTÓRIA 04</p><button class="close-button" aria-label="Fechar informações">×</button></form>
+    <h2 id="about-title">Uma história para escutar.</h2><div class="about-copy"><p>Luísa é uma personagem de 23 anos que vive um transtorno alimentar e começa a procurar cuidado. A história acompanha a relação com a irmã Iara, as perdas de espaço no cotidiano e o aprendizado de pedir apoio.</p><p>A ficção não especifica um diagnóstico individual, não aplica testes e não oferece orientações de alimentação ou tratamento. As decisões do jogo envolvem comunicação, lembranças, companhia e privacidade.</p><p>A busca por acompanhamento profissional faz parte do roteiro e continua no desfecho. O vínculo com a irmã e a música acompanham esse caminho. A personagem não tem sua saúde transformada em uma pontuação.</p><p>A opção <strong>Leitura mais suave</strong> resume alguns trechos de angústia e pode ser ativada a qualquer momento. Os cenários se concentram em objetos e vínculos, com uma composição que permanece a mesma ao longo da história.</p><p>Esta é a quarta história de <em>Como me sinto</em>. As referências de representação e as informações gerais estão em <strong>Apoio e fontes</strong>. O jogo não recebeu avaliação clínica individual nem substitui atendimento.</p></div><form method="dialog" class="dialog-bottom"><button class="primary-button">Voltar</button></form>
+  </dialog>
+
+  <dialog id="support-dialog" aria-labelledby="support-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">UMA PRÓXIMA CONVERSA</p><button class="close-button" aria-label="Fechar apoio e fontes">×</button></form>
+    <h2 id="support-title">Você pode procurar apoio.</h2>
+    <div class="about-copy"><p>Se algo desta história se aproxima do que você vive, uma pessoa de confiança pode ajudar a abrir uma conversa e acompanhar a busca por cuidado. Um profissional de saúde pode avaliar suas necessidades; no SUS, uma UBS pode acolher e orientar essa procura.</p><p>Transtornos alimentares podem ser tratados. O cuidado pode envolver profissionais de diferentes áreas, conforme a avaliação de cada pessoa.</p></div>
+    <ul class="source-list">
+      <li><a href="https://www.gov.br/saude/pt-br/composicao/saes/desmad/raps" target="_blank" rel="noopener noreferrer">Ministério da Saúde — Rede de Atenção Psicossocial</a><small>Informações oficiais sobre serviços, UBS e atenção em saúde mental no SUS.</small></li>
+      <li><a href="https://www.nimh.nih.gov/health/publications/eating-disorders" target="_blank" rel="noopener noreferrer">NIMH — informações sobre transtornos alimentares</a><small>Informações gerais e possibilidades de tratamento. Em inglês.</small></li>
+      <li><a href="https://cdn.mindframe.org.au/assets/src/uploads/Reporting-and-portrayal-of-eating-disorders-Digital.pdf" target="_blank" rel="noopener noreferrer">Mindframe / Everymind — representação responsável</a><small>Referência de linguagem e imagens consultada na criação. PDF em inglês.</small></li>
+    </ul><p class="small-note">Fontes consultadas em 22 de outubro de 2026. A ficção representa uma experiência possível e não todas as pessoas com transtornos alimentares.</p>
+    <form method="dialog" class="dialog-bottom"><button class="primary-button">Voltar</button></form>
+  </dialog>
+  <div id="system-status" class="system-status" role="status" aria-live="polite" aria-atomic="true"></div>
+  <noscript><div class="noscript-message">Este jogo precisa de JavaScript. Ative-o no navegador e abra novamente o arquivo index.html.</div></noscript>
+</body>
+</html>

@@ -1,0 +1,953 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: #000;
+    color: #fff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow: hidden;
+}
+
+
+/* =========================================
+   JOGO
+========================================= */
+
+#game {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background: #000;
+}
+
+
+/* =========================================
+   FUNDO
+========================================= */
+
+#background {
+
+    position: absolute;
+
+    inset: -5%;
+
+    background-image:
+        url("images/shopping-entrada.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    opacity: 0;
+
+    transform: scale(1);
+
+    filter:
+        saturate(90%)
+        brightness(100%)
+        contrast(100%);
+
+    transition:
+        opacity 1.8s ease,
+        filter 2s ease,
+        transform 8s ease;
+}
+
+
+/* =========================================
+   CAMADA DE COR
+========================================= */
+
+#color-layer {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 5;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    background:
+        rgba(40, 100, 180, 0.15);
+
+    mix-blend-mode: color;
+
+    transition:
+        background 3s ease,
+        opacity 3s ease;
+}
+
+
+/* =========================================
+   SOBRECARGA
+========================================= */
+
+#overload {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 7;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255,0,0,.08) 0px,
+            rgba(0,255,255,.08) 4px,
+            rgba(255,0,255,.08) 8px
+        );
+
+    mix-blend-mode: screen;
+
+    transition:
+        opacity 1s ease;
+}
+
+
+/* =========================================
+   VINHETA
+========================================= */
+
+#vignette {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 10;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 20%,
+            rgba(0,0,0,.15) 55%,
+            rgba(0,0,0,.9) 100%
+        );
+}
+
+
+/* =========================================
+   FILME / GRANULAÇÃO
+========================================= */
+
+#film-grain {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 15;
+
+    pointer-events: none;
+
+    opacity: .08;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+
+    animation:
+        grain .15s steps(2) infinite;
+}
+
+
+@keyframes grain {
+
+    0% {
+        transform: translate(0,0);
+    }
+
+    25% {
+        transform: translate(2%,-1%);
+    }
+
+    50% {
+        transform: translate(-1%,2%);
+    }
+
+    75% {
+        transform: translate(1%,1%);
+    }
+
+    100% {
+        transform: translate(0,0);
+    }
+
+}
+
+
+/* =========================================
+   FLASH
+========================================= */
+
+#flash {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 20;
+
+    pointer-events: none;
+
+    background: white;
+
+    opacity: 0;
+
+}
+
+
+/* =========================================
+   HUD
+========================================= */
+
+#hud {
+
+    position: absolute;
+
+    top: 28px;
+
+    left: 35px;
+
+    right: 35px;
+
+    z-index: 50;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    transition:
+        opacity 1s ease;
+}
+
+
+#title {
+
+    font-size: 12px;
+
+    letter-spacing: 6px;
+
+    opacity: .55;
+}
+
+
+#scene-number {
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    opacity: .35;
+}
+
+
+/* =========================================
+   BARRA
+========================================= */
+
+#stress-container {
+
+    position: absolute;
+
+    top: 57px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 280px;
+
+    height: 3px;
+
+    background:
+        rgba(255,255,255,.15);
+
+    z-index: 50;
+
+    transition:
+        opacity 1s ease;
+}
+
+
+#stress {
+
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6aa8ff,
+            #f5d76e,
+            #ff7b5c,
+            #ff2222
+        );
+
+    transition:
+        width .6s ease;
+}
+
+
+/* =========================================
+   TEXTO
+========================================= */
+
+#text {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 95px;
+
+    transform:
+        translateX(-50%);
+
+    width: 82%;
+
+    max-width: 1000px;
+
+    text-align: center;
+
+    font-size:
+        clamp(19px, 2vw, 27px);
+
+    font-weight: 300;
+
+    line-height: 1.7;
+
+    letter-spacing: .3px;
+
+    text-shadow:
+        0 2px 15px #000,
+        0 0 35px #000;
+
+    z-index: 50;
+
+    opacity: 0;
+
+    transition:
+        opacity 1.2s ease;
+}
+
+
+/* =========================================
+   BOTÕES
+========================================= */
+
+button {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    border:
+        1px solid
+        rgba(255,255,255,.5);
+
+    background:
+        rgba(0,0,0,.82);
+
+    color: #fff;
+
+    padding:
+        15px 24px;
+
+    border-radius:
+        8px;
+
+    font-size:
+        15px;
+
+    cursor:
+        pointer;
+
+    backdrop-filter:
+        blur(15px);
+
+    transition:
+        .25s ease;
+}
+
+
+button:hover {
+
+    background:
+        rgba(255,255,255,.95);
+
+    color: #000;
+
+    transform:
+        scale(1.06);
+}
+
+
+button:active {
+
+    transform:
+        scale(.94);
+}
+
+
+/* =========================================
+   BOTÕES DE INTERAÇÃO
+========================================= */
+
+#breathe-btn,
+#dark-btn,
+#stimulus-btn {
+
+    position: absolute;
+
+    display: none;
+
+    z-index: 150;
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.5);
+}
+
+
+#breathe-btn {
+
+    border-color:
+        rgba(100,220,255,.7);
+
+    animation:
+        breathePulse 1.6s infinite;
+}
+
+
+#dark-btn {
+
+    border-color:
+        rgba(150,150,255,.7);
+
+    animation:
+        darkPulse 1.8s infinite;
+}
+
+
+#stimulus-btn {
+
+    border-color:
+        rgba(255,255,255,.7);
+
+    animation:
+        stimulusPulse 1.5s infinite;
+}
+
+
+@keyframes breathePulse {
+
+    0% {
+        box-shadow:
+            0 0 0 rgba(100,220,255,0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 35px rgba(100,220,255,.5);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 rgba(100,220,255,0);
+    }
+
+}
+
+
+@keyframes darkPulse {
+
+    0% {
+        box-shadow:
+            0 0 0 rgba(150,150,255,0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 35px rgba(150,150,255,.4);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 rgba(150,150,255,0);
+    }
+
+}
+
+
+@keyframes stimulusPulse {
+
+    0% {
+        box-shadow:
+            0 0 0 rgba(255,255,255,0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px rgba(255,255,255,.3);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 rgba(255,255,255,0);
+    }
+
+}
+
+
+/* =========================================
+   TELA INICIAL
+========================================= */
+
+#start-screen {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 200;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(5,10,20,.4),
+            rgba(0,0,0,.96)
+        );
+}
+
+
+.start-content {
+
+    max-width: 850px;
+
+    padding: 40px;
+}
+
+
+.opening-label {
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    opacity: .4;
+
+    margin-bottom: 25px;
+}
+
+
+#start-screen h1 {
+
+    font-size:
+        clamp(55px, 9vw, 115px);
+
+    font-weight: 200;
+
+    line-height: .85;
+
+    letter-spacing: 14px;
+
+    margin-left: 14px;
+
+    margin-bottom: 35px;
+}
+
+
+.title-line {
+
+    width: 65px;
+
+    height: 1px;
+
+    background: white;
+
+    opacity: .5;
+
+    margin:
+        0 auto 30px;
+}
+
+
+#start-screen p {
+
+    font-size: 17px;
+
+    line-height: 1.8;
+
+    opacity: .6;
+
+    margin-bottom: 35px;
+}
+
+
+#start-button {
+
+    background:
+        rgba(255,255,255,.95);
+
+    color: #000;
+
+    border: none;
+
+    padding:
+        17px 50px;
+
+    border-radius:
+        50px;
+
+    font-size: 16px;
+
+    letter-spacing: 1px;
+}
+
+
+.start-warning {
+
+    margin-top: 20px;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    opacity: .3;
+}
+
+
+/* =========================================
+   MOVIMENTO DA CÂMERA
+========================================= */
+
+.camera-slow {
+
+    transform:
+        scale(1.06);
+}
+
+
+.camera-close {
+
+    transform:
+        scale(1.13);
+}
+
+
+.camera-extreme {
+
+    transform:
+        scale(1.18);
+}
+
+
+/* =========================================
+   TREMER
+========================================= */
+
+.shake {
+
+    animation:
+        shake .12s infinite;
+}
+
+
+.shake-heavy {
+
+    animation:
+        shakeHeavy .07s infinite;
+}
+
+
+@keyframes shake {
+
+    0% {
+        margin-left: 0;
+    }
+
+    25% {
+        margin-left: 4px;
+    }
+
+    50% {
+        margin-left: -5px;
+    }
+
+    75% {
+        margin-left: 3px;
+    }
+
+    100% {
+        margin-left: 0;
+    }
+
+}
+
+
+@keyframes shakeHeavy {
+
+    0% {
+        transform:
+            scale(1.13)
+            translate(0,0);
+    }
+
+    25% {
+        transform:
+            scale(1.13)
+            translate(6px,-4px);
+    }
+
+    50% {
+        transform:
+            scale(1.13)
+            translate(-6px,5px);
+    }
+
+    75% {
+        transform:
+            scale(1.13)
+            translate(4px,2px);
+    }
+
+    100% {
+        transform:
+            scale(1.13)
+            translate(0,0);
+    }
+
+}
+
+
+/* =========================================
+   FINAL
+========================================= */
+
+#ending {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 300;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        #020304;
+
+    padding: 40px;
+}
+
+
+.ending-content {
+
+    max-width: 900px;
+
+    opacity: 0;
+
+    transform:
+        translateY(30px);
+
+    transition:
+        opacity 3s ease,
+        transform 3s ease;
+}
+
+
+#ending.show .ending-content {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+.ending-small {
+
+    font-size: 9px;
+
+    letter-spacing: 6px;
+
+    opacity: .3;
+
+    margin-bottom: 25px;
+}
+
+
+.ending-line {
+
+    width: 50px;
+
+    height: 1px;
+
+    background: white;
+
+    opacity: .3;
+
+    margin:
+        0 auto 40px;
+}
+
+
+#ending h2 {
+
+    font-size:
+        clamp(26px,4vw,45px);
+
+    font-weight: 200;
+
+    line-height: 1.5;
+}
+
+
+#ending .second-line {
+
+    opacity: .65;
+
+    margin-top: 5px;
+}
+
+
+#ending p {
+
+    margin-top: 45px;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+
+    opacity: .45;
+}
+
+
+.ending-logo {
+
+    margin-top: 65px;
+
+    font-size: 11px;
+
+    letter-spacing: 8px;
+
+    opacity: .25;
+}
+
+
+#restart-button {
+
+    margin-top: 35px;
+
+    background: transparent;
+
+    opacity: .6;
+}
+
+
+/* =========================================
+   GAME OVER
+========================================= */
+
+#game-over {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 400;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        rgba(5,0,0,.97);
+}
+
+
+.game-over-content {
+
+    max-width: 800px;
+
+    padding: 30px;
+}
+
+
+#game-over h2 {
+
+    font-size:
+        clamp(30px,5vw,55px);
+
+    font-weight: 300;
+
+    color:
+        #e84b4b;
+
+    margin-bottom:
+        20px;
+}
+
+
+#game-over p {
+
+    opacity: .5;
+
+    margin-bottom:
+        30px;
+}
+
+
+#retry-button {
+
+    background:
+        transparent;
+}

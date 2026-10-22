@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b21">
+  <meta name="description" content="Uma história interativa sobre memória, perda de visão adquirida e novas maneiras de seguir. Jogue no seu ritmo, pelo teclado ou pelo toque.">
+  <title>O que permanece — Como me sinto</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' rx='20' fill='%23101b21'/%3E%3Ccircle cx='40' cy='40' r='24' fill='none' stroke='%23efd3a6' stroke-width='2'/%3E%3Cpath d='M27 46 Q40 20 53 46' fill='none' stroke='%23efd3a6' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+  <div id="background" aria-hidden="true"><div id="scene-art"></div><div id="vision-layer"></div><div class="film-grain"></div></div>
+  <div class="page-shade" aria-hidden="true"></div>
+
+  <main id="main-content">
+    <section id="start-screen" class="screen" aria-labelledby="game-title">
+      <header class="site-header">
+        <a class="wordmark" href="#game-title" aria-label="Como me sinto. O que permanece."><span class="brand-symbol" aria-hidden="true">◌</span><span>COMO ME SINTO<small>UMA NOVA PERSPECTIVA</small></span></a>
+        <button class="quiet-button" data-open="settings-dialog"><span aria-hidden="true">Aa</span> Acessibilidade</button>
+      </header>
+      <div class="opening-content">
+        <p class="eyebrow"><span class="tiny-line" aria-hidden="true"></span> HISTÓRIA 02 <span class="eyebrow-dot" aria-hidden="true">·</span> FICÇÃO INTERATIVA</p>
+        <h1 id="game-title">O que<br><em>permanece.</em></h1>
+        <p class="opening-quote">Eu conhecia o mundo pelos olhos.<br>Até precisar aprender outros caminhos.</p>
+        <p class="opening-description">Acompanhe Alex, 24 anos, em uma história sobre perder parte da visão ao longo da vida, reencontrar referências e continuar fazendo planos.</p>
+        <div class="opening-actions">
+          <button id="start-button" class="primary-button">Começar história <span aria-hidden="true">↗</span></button>
+          <button id="continue-button" class="secondary-button" hidden>Continuar história</button>
+          <button class="text-button" data-open="help-dialog">Como jogar <span aria-hidden="true">+</span></button>
+        </div>
+        <p id="save-hint" class="small-note" hidden></p>
+        <div class="opening-features"><span><span aria-hidden="true">◷</span> 8–12 minutos</span><span><span aria-hidden="true">⌨</span> Teclado ou toque</span><span><span aria-hidden="true">◎</span> No seu ritmo</span></div>
+      </div>
+      <div class="art-caption" aria-hidden="true"><span class="caption-line"></span><span>A luz muda.<br>As histórias continuam.</span><small>UMA JANELA. MUITOS CAMINHOS.</small></div>
+      <footer class="opening-footer"><span>Uma experiência sobre memória, acesso e autonomia.</span><button class="text-button" data-open="about-dialog">Sobre a história</button></footer>
+    </section>
+
+    <section id="story-screen" class="screen" aria-label="História interativa" hidden>
+      <header class="site-header story-header">
+        <div class="wordmark"><span class="brand-symbol" aria-hidden="true">◌</span><span>O QUE PERMANECE<small id="chapter-label">CAPÍTULO 01</small></span></div>
+        <div class="header-actions"><button id="pause-button" class="quiet-button"><span aria-hidden="true">Ⅱ</span> Pausar</button><button class="quiet-button" data-open="settings-dialog" aria-label="Abrir configurações de acessibilidade"><span aria-hidden="true">Aa</span><span class="desktop-label"> Acessibilidade</span></button></div>
+      </header>
+      <div class="progress-row"><p id="scene-position"></p><progress id="story-progress" max="18" value="1" aria-label="Progresso da história"></progress><span id="timeline-label"></span></div>
+      <article id="story-panel" tabindex="-1" aria-labelledby="scene-title" aria-describedby="scene-description scene-text objective">
+        <p id="scene-kicker" class="eyebrow"></p>
+        <h2 id="scene-title"></h2>
+        <p id="scene-description" class="scene-description"></p>
+        <div id="scene-text" class="narrative"></div>
+        <div id="interaction" class="interaction">
+          <p id="objective" class="objective"></p>
+          <ol id="route-progress" class="route-progress" aria-label="Referências encontradas na rota" hidden></ol>
+          <div id="choices" class="choices" role="group" aria-label="Escolha uma ação"></div>
+          <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+          <div class="continue-row"><button id="next-button" class="primary-button" hidden>Continuar <span aria-hidden="true">→</span></button><button id="route-reset" class="text-button" hidden>Refazer sequência</button></div>
+        </div>
+      </article>
+      <footer class="story-footer">
+        <div class="utility-actions"><button id="repeat-button" class="text-button">Repetir cena</button><button id="listen-button" class="text-button" aria-pressed="false">Ouvir ambiente</button><button id="notebook-button" class="text-button">Caderno de referências <span id="notebook-count" class="counter">0</span></button></div>
+        <p id="control-hint" class="small-note">Tab para navegar · Enter para escolher</p>
+      </footer>
+    </section>
+
+    <section id="ending" class="screen ending-screen" aria-labelledby="ending-title" hidden>
+      <header class="site-header"><div class="wordmark"><span class="brand-symbol" aria-hidden="true">◌</span><span>COMO ME SINTO<small>O QUE PERMANECE</small></span></div><button class="quiet-button" data-open="settings-dialog" aria-label="Abrir configurações de acessibilidade"><span aria-hidden="true">Aa</span> <span class="desktop-label">Acessibilidade</span></button></header>
+      <div class="ending-content" tabindex="-1" id="ending-content" aria-labelledby="ending-title" aria-describedby="ending-text ending-personal">
+        <p class="eyebrow">FIM DESTA HISTÓRIA. COMEÇO DE OUTRAS.</p>
+        <span class="ending-orbit" aria-hidden="true"><span></span></span>
+        <h2 id="ending-title">A vida ainda<br><em>é minha.</em></h2>
+        <p id="ending-text">Minha visão mudou. Continuo sendo a pessoa que gosta de café, guarda lembranças e quer encontrar os amigos. Agora, tenho outras formas de chegar.</p>
+        <p id="ending-personal" class="ending-personal"></p>
+        <p id="ending-message" class="ending-message">Autonomia também é escolher o apoio de que preciso.<br>Acessibilidade faz parte do caminho.</p>
+        <div class="ending-actions"><button id="restart-button" class="primary-button">Jogar outra vez <span aria-hidden="true">↗</span></button><button class="secondary-button" id="ending-notebook">Abrir meu caderno</button><button class="text-button" data-open="about-dialog">Sobre a história</button></div>
+      </div>
+      <footer class="opening-footer"><span>Obrigado por caminhar com Alex.</span><span>Uma história de muitas possíveis.</span></footer>
+    </section>
+  </main>
+
+  <dialog id="settings-dialog" aria-labelledby="settings-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">DO SEU JEITO</p><button class="close-button" aria-label="Fechar configurações">×</button></form>
+    <h2 id="settings-title">Acessibilidade</h2><p class="dialog-intro">A história espera por você. Ajuste a leitura, a voz e o cenário quando quiser.</p>
+    <div class="settings-list">
+      <label class="setting-row"><span><strong>Narração por voz</strong><small>Lê cenas, descrições e escolhas. Se usa leitor de tela, deixe desligada para evitar duas vozes.</small></span><input id="setting-narration" type="checkbox"></label>
+      <div class="setting-row"><label for="setting-rate"><strong>Velocidade da voz</strong></label><select id="setting-rate"><option value="0.85">Mais lenta</option><option value="1">Normal</option><option value="1.15">Mais rápida</option></select></div>
+      <label class="setting-row"><span><strong>Som ambiente</strong><small>Sons suaves e pistas em estéreo. Todas as pistas também aparecem por escrito.</small></span><input id="setting-sound" type="checkbox"></label>
+      <div class="setting-row"><label for="setting-volume"><strong>Volume do ambiente</strong></label><input id="setting-volume" type="range" min="0" max="100" value="35" aria-valuetext="35 por cento"></div>
+      <div class="setting-row"><label for="setting-size"><strong>Tamanho do texto</strong></label><select id="setting-size"><option value="1">Padrão</option><option value="1.15">Grande</option><option value="1.3">Muito grande</option></select></div>
+      <label class="setting-row"><span><strong>Alto contraste</strong><small>Fundo sólido e controles com bordas mais marcadas.</small></span><input id="setting-contrast" type="checkbox"></label>
+      <label class="setting-row"><span><strong>Reduzir movimento</strong><small>Desliga a movimentação da câmera e as transições.</small></span><input id="setting-motion" type="checkbox"></label>
+      <label class="setting-row"><span><strong>Cenário sem desfoque</strong><small>Remove os efeitos visuais. O texto e os controles são sempre nítidos.</small></span><input id="setting-clear" type="checkbox"></label>
+      <label class="setting-row"><span><strong>Atalhos de uma tecla</strong><small>Opcional. Deixe desligado se essas teclas já são usadas pelo seu leitor de tela.</small></span><input id="setting-shortcuts" type="checkbox"></label>
+    </div>
+    <p class="small-note">A voz usa o recurso de fala do navegador e depende das vozes disponíveis no dispositivo.</p>
+    <div class="dialog-bottom"><button id="test-voice" class="secondary-button">Testar voz</button><form method="dialog"><button class="primary-button">Voltar à história</button></form></div>
+  </dialog>
+
+  <dialog id="help-dialog" aria-labelledby="help-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">ANTES DE COMEÇAR</p><button class="close-button" aria-label="Fechar instruções">×</button></form>
+    <h2 id="help-title">No seu ritmo.</h2><p class="dialog-intro">Leia ou escute cada cena e escolha como continuar. Não há limite de tempo. Você pode experimentar as pistas quantas vezes quiser.</p>
+    <ul class="help-list"><li><strong>Teclado:</strong> use Tab e Shift + Tab para navegar; Enter ou Espaço ativa o botão em foco.</li><li><strong>Leitor de tela:</strong> títulos, descrições, pistas e escolhas estão em texto. A narração própria começa desligada.</li><li><strong>Som:</strong> fones ajudam a perceber a direção das pistas, mas não são necessários para resolver nenhuma interação.</li><li><strong>Caderno:</strong> guarda lembranças e referências. Consulte-o sempre que quiser.</li><li><strong>Progresso:</strong> é salvo neste navegador quando o armazenamento local está disponível.</li></ul>
+    <details><summary>Atalhos opcionais de uma tecla</summary><p>Ative-os em Acessibilidade. 1, 2 e 3 escolhem uma ação; N continua; R repete a cena; E liga ou desliga o ambiente; C abre o caderno; P pausa; H abre estas instruções. Escape fecha a janela aberta.</p></details>
+    <div class="dialog-bottom"><button class="secondary-button" id="help-settings">Configurar acessibilidade</button><form method="dialog"><button class="primary-button">Entendi</button></form></div>
+  </dialog>
+
+  <dialog id="pause-dialog" aria-labelledby="pause-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">SEM PRESSA</p><button class="close-button" aria-label="Retomar história">×</button></form>
+    <h2 id="pause-title">O mundo pode esperar.</h2><p class="dialog-intro">A cena está guardada. Volte quando quiser.</p><div class="dialog-bottom"><button id="home-button" class="secondary-button">Voltar ao início</button><form method="dialog"><button class="primary-button">Retomar história</button></form></div>
+  </dialog>
+
+  <dialog id="notebook-dialog" aria-labelledby="notebook-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">O QUE LEVO COMIGO</p><button class="close-button" aria-label="Fechar caderno">×</button></form>
+    <h2 id="notebook-title">Meu caderno</h2><p class="dialog-intro">As referências que fui construindo. Você pode consultá-las em qualquer momento.</p><ul id="notebook-list" class="notebook-list"></ul><form method="dialog" class="dialog-bottom"><button class="primary-button">Voltar</button></form>
+  </dialog>
+
+  <dialog id="about-dialog" aria-labelledby="about-title">
+    <form method="dialog" class="dialog-top"><p class="eyebrow">COMO ME SINTO · HISTÓRIA 02</p><button class="close-button" aria-label="Fechar informações">×</button></form>
+    <h2 id="about-title">Uma história possível.</h2><div class="about-copy"><p>Alex enxergava e adquire uma deficiência visual na vida adulta. A história acompanha uma perda progressiva de visão, com visão residual, e o aprendizado de novas referências.</p><p>Os efeitos no cenário são uma linguagem de ficção. Não reproduzem com precisão uma condição específica nem representam todas as pessoas com deficiência visual.</p><p>O caminho de Alex inclui acompanhamento, reabilitação, tecnologia, vínculos e escolhas próprias. A história termina com novos planos, sem uma recuperação mágica da visão.</p><p>Inspirado na estrutura de cenas e interações do jogo <em>Como me sinto</em>. Esta versão tem cenários vetoriais e sons próprios, sem precisar baixar imagens ou músicas.</p></div><form method="dialog" class="dialog-bottom"><button class="primary-button">Voltar</button></form>
+  </dialog>
+  <div id="system-status" class="system-status" role="status" aria-live="polite" aria-atomic="true"></div>
+  <noscript><div class="noscript-message">Este jogo precisa de JavaScript. Ative-o no navegador e abra novamente o arquivo index.html.</div></noscript>
+</body>
+</html>

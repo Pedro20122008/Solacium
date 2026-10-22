@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Como-me-sinto</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="game">
+
+    <!-- CENÁRIO -->
+
+    <div id="background"></div>
+
+    <!-- CAMADAS DE COR -->
+
+    <div id="color-layer"></div>
+
+    <div id="overload"></div>
+
+    <div id="vignette"></div>
+
+    <div id="film-grain"></div>
+
+    <div id="flash"></div>
+
+
+    <!-- HUD -->
+
+    <div id="hud">
+
+        <div id="title">
+            COMO ME SINTO
+        </div>
+
+        <div id="scene-number">
+            01
+        </div>
+
+    </div>
+
+
+    <!-- BARRA DE SOBRECARGA -->
+
+    <div id="stress-container">
+
+        <div id="stress"></div>
+
+    </div>
+
+
+    <!-- NARRAÇÃO NA TELA -->
+
+    <div id="text"></div>
+
+
+    <!-- BOTÃO RESPIRAR -->
+
+    <button id="breathe-btn">
+        🫁 Respirar
+    </button>
+
+
+    <!-- BOTÃO LUGAR ESCURO -->
+
+    <button id="dark-btn">
+        🌑 Procurar um lugar menos iluminado
+    </button>
+
+
+    <!-- BOTÃO MENOS ESTÍMULOS -->
+
+    <button id="stimulus-btn">
+        🔇 Afastar-se dos estímulos
+    </button>
+
+
+    <!-- TELA INICIAL -->
+
+    <div id="start-screen">
+
+        <div class="start-content">
+
+            <div class="opening-label">
+                UMA EXPERIÊNCIA INTERATIVA
+            </div>
+
+            <h1>
+                COMO ME<br>
+                SINTO
+            </h1>
+
+            <div class="title-line"></div>
+
+            <p>
+                Algumas coisas que sentimos não podem ser vistas.
+            </p>
+
+            <button id="start-button">
+                COMEÇAR
+            </button>
+
+            <div class="start-warning">
+                Recomenda-se utilizar fones de ouvido.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FINAL -->
+
+    <div id="ending">
+
+        <div class="ending-content">
+
+            <div class="ending-small">
+                FIM
+            </div>
+
+            <div class="ending-line"></div>
+
+            <h2>
+                O mundo não ficou mais silencioso.
+            </h2>
+
+            <h2 class="second-line">
+                Mas agora havia espaço para respirar.
+            </h2>
+
+            <p>
+                Nem toda sobrecarga é visível.
+                <br><br>
+                Às vezes, tudo o que alguém precisa
+                <br>
+                é de um pouco menos de mundo.
+            </p>
+
+            <div class="ending-logo">
+                COMO ME SINTO
+            </div>
+
+            <button id="restart-button">
+                RECOMEÇAR
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- GAME OVER -->
+
+    <div id="game-over">
+
+        <div class="game-over-content">
+
+            <div class="ending-small">
+                SOBRECARGA
+            </div>
+
+            <h2>
+                TUDO FICOU ALTO DEMAIS.
+            </h2>
+
+            <p>
+                Os estímulos ultrapassaram o limite.
+            </p>
+
+            <button id="retry-button">
+                TENTAR NOVAMENTE
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
